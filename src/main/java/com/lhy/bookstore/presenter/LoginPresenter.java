@@ -10,4 +10,7 @@ public class LoginPresenter extends BasePresenter {
     public LoginPresenter(IPresenterNotify notifyListener) {
         super(notifyListener);
     }
+    public void loginLogic(String email,String pwd){
+
+    }
 }
