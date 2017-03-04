@@ -7,11 +7,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.app.library.dialog.LodingDialog;
+import com.app.library.dialog.LoadingDialog;
 import com.app.library.mvp.BasePresenter;
 import com.app.library.mvp.NotifyMessage;
 import com.app.library.mvp.PresenterActivity;
-import com.lhy.bookstore.MainPresenter;
+import com.app.library.utils.log.L;
 import com.lhy.bookstore.R;
 import com.lhy.bookstore.presenter.LoginPresenter;
 
@@ -67,8 +67,8 @@ public class LoginActivity extends PresenterActivity implements View.OnClickList
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.bt_login:
-                Log.i(TAG, "Login");
-                LodingDialog dialog = new LodingDialog(this);
+                L.i(TAG, "Login");
+                LoadingDialog dialog = new LoadingDialog(this);
                 dialog.show();
                 break;
         }
