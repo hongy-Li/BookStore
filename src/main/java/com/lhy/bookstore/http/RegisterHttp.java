@@ -20,6 +20,6 @@ public class RegisterHttp extends CommonHttp<IHttpResultListener<String>> {
         Map<String,Object> params=new HashMap<>();
         params.put("email","123456.qq.com");
         params.put("password","hahahah");
-        sendRequest(isShow,dialog, UrlConstants.URL_REGISTER,params,HTTP_GET);
+        sendRequest(isShow,dialog, UrlConstants.URL_REGISTER,params,HTTP_POST);
     }
 }
