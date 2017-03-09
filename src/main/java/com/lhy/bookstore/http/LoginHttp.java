@@ -17,8 +17,8 @@ public class LoginHttp extends CommonHttp<IHttpResultListener<String>> {
     @Override
     public void sendRequestToServer(boolean isShow, IDialog dialog, Object... objects) {
         Map<String,Object> params=new HashMap<>();
-        params.put("email","123456.qq.com");
-        params.put("password","hahahah");
-        sendRequest(isShow,dialog, UrlConstants.URL_REGISTER,params,HTTP_GET);
+        params.put("username","admin");
+        params.put("password","yang116");
+        sendRequest(isShow,dialog, UrlConstants.URL_LOGIN,params,HTTP_GET);
     }
 }

@@ -14,6 +14,7 @@ import com.app.library.mvp.PresenterActivity;
 import com.app.library.utils.log.L;
 import com.lhy.bookstore.R;
 import com.lhy.bookstore.http.IHttpResultListener;
+import com.lhy.bookstore.http.LoginHttp;
 import com.lhy.bookstore.http.RegisterHttp;
 import com.lhy.bookstore.presenter.LoginPresenter;
 
@@ -70,9 +71,7 @@ public class LoginActivity extends PresenterActivity implements View.OnClickList
         switch (view.getId()) {
             case R.id.bt_login:
                 L.i(TAG, "Login");
-//                LoadingDialog dialog = new LoadingDialog(this);
-//                dialog.show();
-                RegisterHttp http=new RegisterHttp(new IHttpResultListener<String>() {
+                LoginHttp loginHttp=new LoginHttp(new IHttpResultListener<String>() {
                     @Override
                     public void Success(String object) {
 
@@ -83,7 +82,7 @@ public class LoginActivity extends PresenterActivity implements View.OnClickList
 
                     }
                 });
-                http.sendRequestToServer(true,getLoddingDialog());
+                loginHttp.sendRequestToServer(false,null);
                 break;
         }
 
