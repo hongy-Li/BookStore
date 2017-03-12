@@ -12,6 +12,6 @@ public class BookApplication extends BaseApplication {
     @Override
     public void onCreate() {
         super.onCreate();
-        L.init(true, Environment.getExternalStorageDirectory().getAbsolutePath() + "/BookStore", "11");
+        L.init(true, Environment.getExternalStorageDirectory().getAbsolutePath() + "/bookStore");
     }
 }

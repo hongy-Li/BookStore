@@ -1,20 +1,18 @@
 package com.lhy.bookstore.activity;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.design.widget.TextInputLayout;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.app.library.dialog.LoadingDialog;
 import com.app.library.mvp.BasePresenter;
 import com.app.library.mvp.NotifyMessage;
 import com.app.library.mvp.PresenterActivity;
 import com.app.library.utils.log.L;
 import com.lhy.bookstore.R;
-import com.lhy.bookstore.http.IHttpResultListener;
-import com.lhy.bookstore.http.RegisterHttp;
 import com.lhy.bookstore.presenter.LoginPresenter;
 
 public class LoginActivity extends PresenterActivity implements View.OnClickListener {
@@ -65,25 +63,25 @@ public class LoginActivity extends PresenterActivity implements View.OnClickList
 
     }
 
+    Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            L.i(TAG,"handleMessage MSG="+msg);
+        }
+
+        @Override
+        public void dispatchMessage(Message msg) {
+            super.dispatchMessage(msg);
+            L.i(TAG,"dispatchMessage MSG="+msg);
+        }
+    };
+
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.bt_login:
-                L.i(TAG, "Login");
-//                LoadingDialog dialog = new LoadingDialog(this);
-//                dialog.show();
-                RegisterHttp http=new RegisterHttp(new IHttpResultListener<String>() {
-                    @Override
-                    public void Success(String object) {
-
-                    }
-
-                    @Override
-                    public void Error(String msg) {
-
-                    }
-                });
-                http.sendRequestToServer(true,getLoddingDialog());
+                handler.sendEmptyMessage(12);
                 break;
         }
 
