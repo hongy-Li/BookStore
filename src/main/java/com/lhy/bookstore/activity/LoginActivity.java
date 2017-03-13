@@ -13,6 +13,9 @@ import com.app.library.mvp.NotifyMessage;
 import com.app.library.mvp.PresenterActivity;
 import com.app.library.utils.log.L;
 import com.lhy.bookstore.R;
+import com.lhy.bookstore.http.IHttpResultListener;
+import com.lhy.bookstore.http.LoginHttp;
+import com.lhy.bookstore.http.RegisterHttp;
 import com.lhy.bookstore.presenter.LoginPresenter;
 
 public class LoginActivity extends PresenterActivity implements View.OnClickListener {
@@ -81,6 +84,19 @@ public class LoginActivity extends PresenterActivity implements View.OnClickList
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.bt_login:
+                L.i(TAG, "Login");
+                LoginHttp loginHttp=new LoginHttp(new IHttpResultListener<String>() {
+                    @Override
+                    public void Success(String object) {
+
+                    }
+
+                    @Override
+                    public void Error(String msg) {
+
+                    }
+                });
+                loginHttp.sendRequestToServer(false,null);
                 handler.sendEmptyMessage(12);
                 break;
         }

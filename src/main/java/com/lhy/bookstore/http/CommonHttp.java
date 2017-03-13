@@ -20,7 +20,7 @@ public abstract class CommonHttp<T extends IHttpListener> extends BaseHttp {
     }
 
     @Override
-    protected void sendRequest(boolean isDialogShow, IDialog dialog, String url, Map params, int method) {
+    protected void sendRequest(boolean isDialogShow, IDialog dialog, String url, Map params, String method) {
         L.i(TAG, mClassName + "-->Begin:Url=" + url + " params=" + params + " method=" + method);
         try {
             super.sendRequest(isDialogShow, dialog, url, params, method);
