@@ -6,7 +6,7 @@ import com.app.library.mvp.BasePresenter;
 import com.app.library.mvp.NotifyMessage;
 import com.app.library.mvp.PresenterActivity;
 
-public class MainActivity extends PresenterActivity {
+public class MainActivity extends PresenterActivity<MainPresenter> {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,7 +19,7 @@ public class MainActivity extends PresenterActivity {
     }
 
     @Override
-    public BasePresenter createPresenter() {
+    public MainPresenter createPresenter() {
         return new MainPresenter(this);
     }
 

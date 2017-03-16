@@ -1,27 +1,26 @@
 package com.lhy.bookstore.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
+import android.os.Environment;
 import android.support.design.widget.TextInputLayout;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.app.library.mvp.BasePresenter;
 import com.app.library.mvp.NotifyMessage;
 import com.app.library.mvp.PresenterActivity;
 import com.app.library.utils.log.L;
 import com.lhy.bookstore.R;
-import com.lhy.bookstore.http.IHttpResultListener;
-import com.lhy.bookstore.http.LoginHttp;
-import com.lhy.bookstore.http.RegisterHttp;
-import com.lhy.bookstore.presenter.LoginPresenter;
+import com.lhy.netlibrary.IProgressListener;
+import com.lhy.netlibrary.IRequestListener;
+import com.lhy.netlibrary.okhttp.OKHttpUtils;
 
-public class LoginActivity extends PresenterActivity implements View.OnClickListener {
+public class LoginActivity extends PresenterActivity<LoginPresenter> implements View.OnClickListener {
     TextInputLayout til_email, til_pwd;
     EditText et_email, et_pwd;
     Button bt_login;
+    Button bt_register;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +40,7 @@ public class LoginActivity extends PresenterActivity implements View.OnClickList
         et_email = (EditText) findViewById(R.id.et_email);
         et_pwd = (EditText) findViewById(R.id.et_pwd);
         bt_login = (Button) findViewById(R.id.bt_login);
+        bt_register = (Button) findViewById(R.id.bt_register);
     }
 
     @Override
@@ -54,52 +54,101 @@ public class LoginActivity extends PresenterActivity implements View.OnClickList
     protected void initEvent() {
         super.initEvent();
         bt_login.setOnClickListener(this);
+        bt_register.setOnClickListener(this);
     }
 
     @Override
-    public BasePresenter createPresenter() {
+    public LoginPresenter createPresenter() {
         return new LoginPresenter(this);
     }
 
     @Override
     public void notify(NotifyMessage message) {
-
+        int what = message.what;
+        switch (what) {
+            case 1:
+                Intent intent = new Intent();
+                intent.setClass(this, MainActivity.class);
+                startActivity(intent);
+                break;
+        }
     }
-
-    Handler handler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            L.i(TAG,"handleMessage MSG="+msg);
-        }
-
-        @Override
-        public void dispatchMessage(Message msg) {
-            super.dispatchMessage(msg);
-            L.i(TAG,"dispatchMessage MSG="+msg);
-        }
-    };
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.bt_login:
+            case R.id.bt_login: {
                 L.i(TAG, "Login");
-                LoginHttp loginHttp=new LoginHttp(new IHttpResultListener<String>() {
-                    @Override
-                    public void Success(String object) {
+//                String email = et_email.getText().toString().trim();
+//                String pwd = et_pwd.getText().toString().trim();
+//                mPresenter.loginLogic(email, pwd);
 
+//                String url = "http://cloud-robot-diy.oss-cn-beijing.aliyuncs.com/vedio/1150942___rec_0xb9128440_[2106-12-30]9_54_52_1.mp4";
+                String url = "http://60.205.149.3:8888/v1.0/code";
+
+                String path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/Download";
+                OKHttpUtils.getInstance().downloadFileWithProgress(url, path, "haha", new IProgressListener() {
+                    @Override
+                    public void onSucceed(String msg) {
+                        L.i(TAG, "MSG=" + msg);
                     }
 
                     @Override
-                    public void Error(String msg) {
+                    public void onFailed(Exception e) {
+                        L.i(TAG, "e=" + e.toString());
+                    }
 
+                    @Override
+                    public void progress(long currentBytes, long totalBytes, boolean done) {
+                        L.i(TAG, "currentBytes=" + currentBytes + " totalBytes=" + totalBytes + " done=" + done);
                     }
                 });
-                loginHttp.sendRequestToServer(false,null);
-                handler.sendEmptyMessage(12);
-                break;
-        }
+            }
+            break;
+            case R.id.bt_register: {
+                String url = "http://60.205.149.3:8888/v1.0/transition/robot/uploadResource/1";
+                String path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/Download/haha.mp4";
+                OKHttpUtils.getInstance().uploadFileWithProgress(url, path, "", new IProgressListener() {
+                    @Override
+                    public void progress(long currentBytes, long totalBytes, boolean done) {
+                        L.i(TAG, "currentBytes=" + currentBytes + " totalBytes=" + totalBytes + " done=" + done);
+                    }
 
+                    @Override
+                    public void onSucceed(String msg) {
+                        L.i(TAG, "MSG=" + msg);
+                    }
+
+                    @Override
+                    public void onFailed(Exception e) {
+                        L.i(TAG, "e=" + e.toString());
+                    }
+                });
+
+
+            }
+            break;
+        }
+    }
+
+    public void normalRequest(View view) {
+        String url = "http://60.205.149.3:8888/v1.0/robot/findBindUser/100000002808";
+        OKHttpUtils.getInstance().postRequest(url, null, new IRequestListener() {
+            @Override
+            public void onSucceed(String msg) {
+                L.i(TAG, "msg=" + msg);
+            }
+
+            @Override
+            public void onFailed(Exception e) {
+
+            }
+        });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        L.i(TAG, "onDestroy");
     }
 }

@@ -37,4 +37,18 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:text="Login" />
+
+    <Button
+        android:id="@+id/bt_register"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="注册" />
+    <Button
+        android:id="@+id/bt_normalRequest"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:onClick="normalRequest"
+        android:text="普通请求" />
 </LinearLayout>

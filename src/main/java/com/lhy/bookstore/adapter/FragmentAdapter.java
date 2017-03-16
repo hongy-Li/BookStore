@@ -10,8 +10,7 @@ import java.util.List;
 /**
  * Created by lt on 2015/12/14.
  */
-public class FragmentAdapter extends FragmentPagerAdapter{
-
+public class FragmentAdapter extends FragmentPagerAdapter {
     private final String[] titles;
     private Context context;
     private List<Fragment> fragments;
